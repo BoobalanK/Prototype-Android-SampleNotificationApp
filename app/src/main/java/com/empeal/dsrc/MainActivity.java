@@ -1,5 +1,9 @@
 package com.empeal.dsrc;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -19,7 +23,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static final String NOTIFICATION_ID = "NOTIFICATION_ID";
+    public static final String CALL_ACTION = "CALL_ACTION";
+    public static final String NOTIFICATION_DATA = "NOTIFICATION_DATA";
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -72,5 +78,18 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public static PendingIntent getActionIntent(int notificationId, Uri uri, String callAction, String notificationData, Context context) {
+        //Intent intent =  new Intent(Intent.ACTION_VIEW,uri);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //intent.putExtra(NOTIFICATION_ID, notificationId);
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage("com.empealmobile");
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setAction(callAction);
+        intent.putExtra(NOTIFICATION_ID, notificationId);
+        intent.putExtra(NOTIFICATION_DATA,notificationData);
+        PendingIntent acceptIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return acceptIntent;
     }
 }

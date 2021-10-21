@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "679137556199",
+    "project_id": "empealdsrc",
+    "storage_bucket": "empealdsrc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679137556199:android:52d94744da15985acb5442",
+        "android_client_info": {
+          "package_name": "com.empeal.dsrc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679137556199-q9cpshj3nq3klpnqc3kjcsb4c3o8n20p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAajoFrZbC6q8C065C1PFIYUsHZGWUaojw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679137556199-q9cpshj3nq3klpnqc3kjcsb4c3o8n20p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679137556199:android:f2928772b8e66216cb5442",
+        "android_client_info": {
+          "package_name": "com.viauapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679137556199-q9cpshj3nq3klpnqc3kjcsb4c3o8n20p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAajoFrZbC6q8C065C1PFIYUsHZGWUaojw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679137556199-q9cpshj3nq3klpnqc3kjcsb4c3o8n20p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
