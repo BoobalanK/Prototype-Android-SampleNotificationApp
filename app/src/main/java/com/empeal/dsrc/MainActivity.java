@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         //Intent intent =  new Intent(Intent.ACTION_VIEW,uri);
         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         //intent.putExtra(NOTIFICATION_ID, notificationId);
-        Intent intent = context.getPackageManager().getLaunchIntentForPackage("com.empealmobile");
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage("com.empeal.dsrc");
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.setAction(callAction);
         intent.putExtra(NOTIFICATION_ID, notificationId);

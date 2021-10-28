@@ -6,8 +6,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioAttributes;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -22,8 +24,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -34,8 +38,7 @@ import org.json.JSONObject;
 import java.util.Iterator;
 import java.util.List;
 
-public class EmpealMessagingService extends FirebaseMessagingService {
-
+public class SampleNotificationMessagingService extends FirebaseMessagingService {
     /**
      * Called when message is received.
      *
@@ -46,10 +49,7 @@ public class EmpealMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.e("remoteMessage",remoteMessage.getData().toString());
         try {
-            if(!isAppRunning())
-            {
                 sendNotification(remoteMessage);
-            }
         } catch (Exception e) {
             Log.e("onMessageReceived error", e.getMessage() + "\n" + e.toString());
         }
@@ -80,7 +80,7 @@ public class EmpealMessagingService extends FirebaseMessagingService {
         int oneTimeID = (int) SystemClock.uptimeMillis();
         String channelId = "fcm_call_channel";
         String channelName = "Incoming Call";
-        Uri uri= Uri.parse("empealmobileapp://");
+        Uri uri= Uri.parse("samplenotification://");
         String IS_CALL_ACCEPTED = "IS_CALL_ACCEPTED";
 
         Uri notification_sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
@@ -96,11 +96,21 @@ public class EmpealMessagingService extends FirebaseMessagingService {
         intent.putExtra("NOTIFICATION_ID",oneTimeID);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-
         // notification action buttons start
         PendingIntent acptIntent = MainActivity.getActionIntent(oneTimeID,uri,"Accept",notification_data,this);
-        PendingIntent rjctIntent = MainActivity.getActionIntent(oneTimeID,uri,"Decline",notification_data, this);
+
+        //Create an Intent for the BroadcastReceiver
+        Intent buttonIntent = new Intent(getApplicationContext(), DismissNotificationBroadCastReceiver.class);
+        buttonIntent.putExtra("NOTIFICATION_ID",oneTimeID);
+
+        //Create the PendingIntent
+        PendingIntent rjctIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, buttonIntent,PendingIntent.FLAG_ONE_SHOT);
+
+        //Intent rejectIntent = new Intent(this, SampleIntentService.class);
+        //rejectIntent.putExtra("NOTIFICATION_ID",oneTimeID);
+        //PendingIntent rjctIntent = NotificationActivity.getDismissIntent(oneTimeID, getApplicationContext());
+
+        //PendingIntent rjctIntent = MainActivity.getActionIntent(oneTimeID,uri,"Decline",notification_data, this);
 
         NotificationCompat.Action rejectCall=new NotificationCompat.Action.Builder(R.drawable.rjt_btn,getActionText("Decline",android.R.color.holo_red_light),rjctIntent).build();
         NotificationCompat.Action acceptCall=new NotificationCompat.Action.Builder(R.drawable.acpt_btn,getActionText("Answer",android.R.color.holo_green_light),acptIntent).build();
